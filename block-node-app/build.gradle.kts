@@ -1,5 +1,4 @@
 import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.protobuf
 
 plugins {
     id("com.google.protobuf") version "0.9.4"
@@ -16,7 +15,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
-    implementation("com.google.protobuf:protobuf-java:3.25.2")
+    implementation("com.google.protobuf:protobuf-java:4.26.0-RC1")
 // https://mvnrepository.com/artifact/io.grpc/grpc-all
     implementation("io.grpc:grpc-all:1.61.1")
 // https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
@@ -40,7 +39,7 @@ sourceSets {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.10.1:osx-x86_64"
+        artifact = "com.google.protobuf:protoc:4.26.0-RC1:osx-x86_64"
     }
 
     plugins {
