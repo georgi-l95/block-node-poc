@@ -63,5 +63,5 @@ service BlockService {
    * A pessimistic implementation may wish to accept the entire block before validating the state proof and providing a
    * response.
    */
-  rpc blocksPutIfAbsent (stream BlocksPutIfAbsentRequest) returns (BlocksPutIfAbsentResponse);
+  rpc blocksPutIfAbsent (stream BlocksPutIfAbsentRequest) returns (stream BlocksPutIfAbsentResponse);
 }

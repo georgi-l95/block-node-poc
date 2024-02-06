@@ -56,7 +56,7 @@ message BlockItem {
      * A raw non-system transaction. A Transaction block item is always followed by TransactionResult,
      * TransactionOutput and BlockTransactionStateChanges in that order.
      */
-    Transaction transaction = 4;
+    Transaction transaction = 1;
 
     /**
      * The result of running the transaction.
