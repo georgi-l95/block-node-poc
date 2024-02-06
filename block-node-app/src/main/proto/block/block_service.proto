@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package proto;
+
+/*-
+ * ‌
+ * Hedera Network Services Protobuf
+ * ​
+ * Copyright (C) 2023 Hedera Hashgraph, LLC
+ * ​
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ‍
+ */
+option java_multiple_files = true;
+option java_package = "com.hedera.block.node.api.proto.java";
+// <<<pbj.java_package = "com.hedera.block.node.api">>> This comment is special code for setting PBJ Compiler java package
+
+import "streams/v7/block_item.proto";
+
+//message BlockChunk {
+//  bytes chunk_data = 1;
+//  bool end_of_chunks = 2;
+//}
+
+message BlocksPutIfAbsentRequest {
+  repeated BlockItem block_item = 1;
+}
+
+message BlocksPutIfAbsentResponse {
+  // Not sure what to put here yet. We'll probably want a status code. For example, if someone uploads a whole block
+  // before you, then we sent a status of "BLOCK_ALREADY_EXISTS".
+  BlocksPutIfAbsentResponseCode status = 1;
+}
+
+enum BlocksPutIfAbsentResponseCode {
+  BLOCKS_PUT_IF_ABSENT_SUCCESS = 0;
+  BLOCKS_PUT_IF_ABSENT_BLOCK_ALREADY_EXISTS = 1;
+}
+
+/**
+ * RPCs for the Block Node.
+ */
+service BlockService {
+  /**
+   * If the specified block is not already persisted to the block server, uploads the block and returns a SUCCESS status
+   * in the BlocksPutIfAbsentResponse, else returns a different status. Each BlocksPutIfAbsentRequest in the stream may
+   * contain one or more BlockItem(s). The server must append each BlockItem to construct a block. The Block ends with a
+   * BlockItem containing a BlockStateProof. It is recommended that the server implementation verify the Block using the
+   * BlockStateProof to validate the contents.
+   *
+   * A server implementation may return BLOCK_ALREADY_EXISTS at any time to indicate to the client that the block has
+   * already been uploaded. An optimistic implementation may check the initial block number and reject the block early.
+   * A pessimistic implementation may wish to accept the entire block before validating the state proof and providing a
+   * response.
+   */
+  rpc blocksPutIfAbsent (stream BlocksPutIfAbsentRequest) returns (BlocksPutIfAbsentResponse);
+}
