@@ -27,55 +27,55 @@ option java_package = "com.hedera.services.stream.v7.proto";
 option java_multiple_files = true;
 
 import "transaction.proto";
-//import "v7/block_header.proto";
-//import "v7/block_state_proof.proto";
-//import "v7/event_metadata.proto";
-//import "v7/state_changes.proto";
-//import "v7/system_transaction.proto";
-//import "v7/transaction_output.proto";
-//import "v7/transaction_result.proto";
+import "streams/v7/block_header.proto";
+import "streams/v7/block_state_proof.proto";
+import "streams/v7/event_metadata.proto";
+import "streams/v7/state_changes.proto";
+import "streams/v7/system_transaction.proto";
+import "streams/v7/transaction_output.proto";
+import "streams/v7/transaction_result.proto";
 
 message BlockItem {
   oneof block_item {
     /**
      * The header of the block, marking the start of a new block.
      */
-//    BlockHeader header = 1;
+    BlockHeader header = 1;
 
     /**
      * The start of a new event.
      */
-//    EventMetadata start_event = 2;
+    EventMetadata start_event = 2;
 
     /**
      * A system transaction.
      */
-//    SystemTransaction system_transaction = 3;
+    SystemTransaction system_transaction = 3;
 
     /**
      * A raw non-system transaction. A Transaction block item is always followed by TransactionResult,
      * TransactionOutput and BlockTransactionStateChanges in that order.
      */
-    Transaction transaction = 1;
+    Transaction transaction = 4;
 
     /**
      * The result of running the transaction.
      */
-//    TransactionResult transaction_result = 5;
+    TransactionResult transaction_result = 5;
 
     /**
      * The transaction output.
      */
-//    TransactionOutput transaction_output = 6;
+    TransactionOutput transaction_output = 6;
 
     /**
      * The state changes. The type of state changes is determined by the reason enum in StateChanges.
      */
-//    StateChanges state_changes = 7;
+    StateChanges state_changes = 7;
 
     /**
    * State Proof of running hash
    */
-//    BlockStateProof state_proof = 8;
+    BlockStateProof state_proof = 8;
   }
 }
